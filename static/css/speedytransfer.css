@@ -1,0 +1,66 @@
+header {
+    background-color: #020202;
+    margin-bottom: 15px;
+}
+header .logo {
+    font-size: 24px;
+    padding: 20px 0;
+}
+#speedy header .logo a {
+    color: #25B925;
+    text-decoration: none;
+}
+header .logo img {
+    height: 25px;
+    position: relative;
+    top: -3px;
+}
+.headerFlex {
+    display: flex;
+    justify-content: space-between;
+}
+.header-links {
+    padding: 25px 0;
+}
+
+.header-links span {
+    margin: 0 5px;
+}
+
+#speedy a {
+    color: #02a502;
+}
+
+#speedy .btn-secondary {
+    color: #ffffff;
+    background-color: #25B925;
+    border: 0;
+}
+
+#speedy .btn-primary {
+    color: #ffffff;
+    background-color: #020202;
+    border: 0;
+}
+
+#speedy .btn {
+    cursor: pointer;
+}
+
+.login {
+    display: inline-block;
+    max-width: 300px;
+}
+
+.material {
+    padding: 15px;
+    background-color: #f3f3f3;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+pre {
+    background-color: #f3f3f3;
+    padding: 5px; 
+}
+

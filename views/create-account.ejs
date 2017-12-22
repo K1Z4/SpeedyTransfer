@@ -1,0 +1,16 @@
+<% include includes/header.ejs %>
+
+<div class="container text-center">
+    <form method="post" class="login">
+        <h2>Create Account</h2>
+        <div class="form-group">
+            <label for="inputUsername" class="sr-only">Username</label>
+            <input type="text" id="inputUsername" class="form-control" placeholder="Username" name="username" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" minlength="10" required>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Create Account</button>
+    </form>
+</div>
+
+<% include includes/footer.ejs %>

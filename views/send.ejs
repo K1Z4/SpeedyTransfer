@@ -1,0 +1,16 @@
+<% include includes/header.ejs %>
+
+<div class="container">
+    <h1>Send message</h1>
+    <p>Send a message to another device.</p>
+    <form method="post">
+        <div class="form-group">
+            <label for="content">Message contents</label>
+            <textarea class="form-control" id="content" name="content" aria-describedby="contentHelp" placeholder="Message Contents"></textarea>
+            <small id="contentHelp" class="form-text text-muted">Messages are deleted after 15 minutes.</small>
+        </div>
+        <button type="submit" class="btn btn-primary" id="submit">Send Message</button>
+    </form>
+</div>
+
+<% include includes/footer.ejs %>
