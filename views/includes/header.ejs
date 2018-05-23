@@ -13,19 +13,9 @@
     </head>
     <body id="speedy">
         <header>
-            <div class="container headerFlex">
+            <div class="container">
                 <div class="logo">
                     <a href="/"><img src="/img/logo.svg" alt="SpeedyTransfer Logo">SpeedyTransfer</a>
-                </div>
-
-                <div class="header-links">
-                    <% if (user) { %>
-                        <span><a class="btn btn-secondary" href="/send" role="button" title="Send a new message">Send</a></span>
-                        <span><a href="/dashboard">Dashboard</a></span>
-                        <span><a href="/logout">Logout</a></span>
-                    <% } else { %>
-                        <span><a href="/login">Login</a></span>
-                    <% } %>
                 </div>
             </div>
         </header>

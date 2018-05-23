@@ -1,0 +1,31 @@
+<% include includes/header.ejs %>
+
+<script>
+    var url = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '') + "/get/<%= key %>";
+</script>
+<div class="container">
+    <div class="text-center mb-2">
+        <canvas id="qrCode" width="100" height="100">qr code</canvas>
+    </div>
+    <p>Scan the QR code or open the link below to retrieve the message on your second device</p>
+    <div class="row mb-3">
+        <div class="col-sm pr-0">
+            <pre id="msgContent" class="mb-0"><script>document.write(url)</script></pre>
+        </div>
+        <div class="col-sm">
+            <button class="btn btn-primary copy" data-clipboard-target="#msgContent">Copy</button>
+        </div>
+    </div>
+
+    <form method="POST" action="/delete">
+        <input class="d-none" name="key" value="<%= key %>">
+        <button class="btn btn-outline-danger">Delete message</button>
+    </form>
+</div>
+<script src="/js/clipboard.min.js"></script>
+<script src="/js/qrious.min.js"></script>
+<script>
+    new QRious({ element: $('#qrCode'), size: 200, value: url });
+</script>
+
+<% include includes/footer.ejs %>
