@@ -15,17 +15,6 @@ header .logo img {
     position: relative;
     top: -3px;
 }
-.headerFlex {
-    display: flex;
-    justify-content: space-between;
-}
-.header-links {
-    padding: 25px 0;
-}
-
-.header-links span {
-    margin: 0 5px;
-}
 
 #speedy a {
     color: #02a502;
@@ -45,18 +34,6 @@ header .logo img {
 
 #speedy .btn {
     cursor: pointer;
-}
-
-.login {
-    display: inline-block;
-    max-width: 300px;
-}
-
-.material {
-    padding: 15px;
-    background-color: #f3f3f3;
-    border: 1px solid #ccc;
-    border-radius: 5px;
 }
 
 pre {

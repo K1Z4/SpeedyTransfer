@@ -2,12 +2,16 @@
 
 <div class="container">
     <h2>Message</h2>
-    <pre id="msgContent"><%= message.content %></pre>
-    <p>Sent from: <%= message.sendingDevice %></p>
-    <div>
+    <pre id="msgContent"><%= message %></pre>
+    <div class="d-flex justify-content-between">
         <button class="btn btn-primary copy" data-clipboard-target="#msgContent">Copy</button>
-        <!--<button class="btn btn-primary">Delete</button>-->
+        <form method="POST" action="/delete" class="d-inline-block">
+            <input class="d-none" name="key" value="<%= key %>">
+            <button class="btn btn-outline-danger">Delete message</button>
+        </form>
     </div>
+
+
 </div>
 <script src="/js/clipboard.min.js"></script>
 
