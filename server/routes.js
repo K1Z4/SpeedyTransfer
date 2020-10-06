@@ -1,41 +1,56 @@
 module.exports = function(app) {
-    const logger = require("./logger.js");
+    const logger = require("@kiza/logger");
+    const config = require("config")
     const database = require("./database.js");
+    const { v4 } = require('uuid');
 
-    app.get('/', (req, res) => res.render('index'));
+    app.use(function(req, res, next) {
+        req.room = req.cookies[config.cookieName];
+        next();
+    });
+
+    app.get('/', async function(req, res) {
+        const room = req.room;
+        const messages = await database.getMessages(room);
+
+        res.render('index', { room, messages });
+    });
+
+    app.post('/create-room', async function(req, res) {
+        try {
+            if (!req.room) {
+                const guid = v4();
+                setCookie(res, guid);
+            } else {
+                logger.debug("Room cookie is already set");
+            }
+
+            res.redirect("/");
+        } catch (err) {
+            next(err);
+        }
+    });
+
     app.post('/add', async function(req, res) {
-        const content = req.body.content || '';
-
         try {
-            const key = Math.random().toString(36).substring(7);
-            await database.addMessage(key, content);
-            res.render("sent", { key });
+            if (req.room) {
+                const content = req.body.content || '';
+                await database.addMessage(req.room, content);
+            }
+
+            res.redirect("/");
         } catch (err) {
-            logAndError(err, res);
+            next(err);
         }
     });
 
-    app.post('/delete', async function(req, res) {
-        const key = req.body.key;
-        if (!key) return res.status(400).send("invalid input");
-
-        try {
-            await database.deleteMessage(key);
-            res.render("notify", { message: "Message deleted" });
-        } catch (err) {
-            logAndError(err, res);
-        }
-    });
-
-    app.get('/get/:key', async function(req, res) {
+    app.get('/join/:key', async function(req, res, next) {
         try {
             const key = req.params.key;
-            const message = await database.getMessage(key);
-            if (!message) return res.status(404).render("notify", { message: "Message not found" });
-
-            res.render("message", { message: message.content, key });
+            setCookie(res, key);
+            res.redirect("/");
         } catch (err) {
-            logAndError(err, res);
+            next(err);
         }
     });
 
@@ -44,11 +59,11 @@ module.exports = function(app) {
     app.post('*', (req, res) => res.status(404).send('404'));
     
     app.use(function(err, req, res, next) {
-        logAndError(err, res)
-    });
-
-    function logAndError(err, res) {
         logger.error(err.stack || err);
         res.status(500).send('500');
+    });
+
+    function setCookie(res, room) {
+        res.cookie(config.cookieName, room, { maxAge: 900000, httpOnly: true });
     }
 };

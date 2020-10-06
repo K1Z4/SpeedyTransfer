@@ -4,10 +4,14 @@
   "description": "",
   "main": "server/main.js",
   "dependencies": {
+    "@kiza/logger": "^1.1.0",
     "body-parser": "^1.18.3",
+    "config": "^3.3.2",
+    "cookie-parser": "^1.4.5",
     "ejs": "^2.6.1",
-    "express": "^4.16.3",
+    "express": "^4.17.1",
     "sqlite3": "^3.1.13",
+    "uuid": "^8.3.1",
     "winston": "^2.4.2"
   },
   "devDependencies": {},

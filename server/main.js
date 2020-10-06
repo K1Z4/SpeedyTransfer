@@ -1,14 +1,12 @@
 "use strict";
 
 const path = require('path');
-
 const express = require('express');
 const bodyParser = require('body-parser');
-const config = require("../config.json");
+const cookieParser = require('cookie-parser')
 
-const logger = require("./logger.js");
-
-logger.info("Starting...");
+const config = require("config");
+const logger = require("@kiza/logger");
 
 const app = express();
 
@@ -17,6 +15,7 @@ app.set('view engine', 'ejs');
 app.disable('x-powered-by');
 app.use(express.static(path.join(__dirname, '../static')));
 
+app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

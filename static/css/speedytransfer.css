@@ -10,7 +10,7 @@ header .logo {
     color: #25B925;
     text-decoration: none;
 }
-header .logo img {
+header .logo svg {
     height: 25px;
     position: relative;
     top: -3px;

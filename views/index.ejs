@@ -1,15 +1,49 @@
 <% include includes/header.ejs %>
 
 <div class="container">
-    <h2>Send</h2>
-    <form method="post" action="/add">
-        <div class="form-group">
-            <label for="content" class="sr-only">Message contents</label>
-            <textarea class="form-control" id="content" name="content" aria-describedby="contentHelp" placeholder="Message Contents"></textarea>
-            <small id="contentHelp" class="form-text text-muted">Messages are deleted after 15 minutes.</small>
+    <h2>Messages</h2>
+    <% messages.forEach(function(message, index) { %>
+        <div class="card">
+            <div class="card-body">
+                <pre id="message<%- index %>"><%= message.content %></pre>
+            </div>
+            <a href="#" class="card-link copy" data-clipboard-target="#message<%- index %>">Copy</a>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg" id="submit">Get link</button>
-    </form>
+    <% }); %>
+
+    <% if (room) { %>
+        <h2>Add</h2>
+        <form method="post" action="/add">
+            <div class="form-group">
+                <label for="content" class="sr-only">Message contents</label>
+                <textarea class="form-control" id="content" name="content" aria-describedby="contentHelp" placeholder="Message Contents"></textarea>
+                <small id="contentHelp" class="form-text text-muted">Messages are deleted after 15 minutes.</small>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg">Add</button>
+        </form>
+
+        <div class="card card-body mt-4">
+            <div class="text-center mb-2">
+                <canvas id="qrCode" width="100" height="100"></canvas>
+            </div>
+            <div>
+                <a href="/join/<%- room %>"><%= room %></a>
+            </div>
+        </div>
+
+        <script src="/js/qrious.min.js"></script>
+        <script>
+            var url = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '') + "/join/<%= room %>";
+            new QRious({ element: $('#qrCode'), size: 200, value: url });
+        </script>
+    <% } else { %>
+        <h2>Setup room</h2>
+        <form method="POST" action="/create-room">
+            <button type="submit" class="btn btn-primary btn-lg">Create room</button>
+        </form>
+    <% } %>
 </div>
+
+<script src="/js/clipboard.min.js" async></script>
 
 <% include includes/footer.ejs %>

@@ -1,19 +1,15 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('../data/speedytransfer.sqlite');
 
-db.run("CREATE TABLE IF NOT EXISTS message (key TEXT NOT NULL, content TEXT NOT NULL, sendTime TEXT NOT NULL)");
+db.run("CREATE TABLE IF NOT EXISTS message (room TEXT NOT NULL, content TEXT NOT NULL, sendTime TEXT NOT NULL)");
 
 module.exports = class Database {
-    static getMessage(key) {
-        return promisifyGetSingle("SELECT content, sendTime FROM message WHERE key = ?", [key])
+    static getMessages(room) {
+        return promisifyAll("SELECT content, sendTime FROM message WHERE room = ?", [room])
     }
 
-    static addMessage(key, messageContent) {
-        return promisifyRun("INSERT INTO message (key, content, sendTime) VALUES (?, ?, Datetime('now'))", [key, messageContent]);
-    }
-
-    static deleteMessage(key) {
-        return promisifyRun("DELETE FROM message WHERE key = ?", [key]);
+    static addMessage(room, messageContent) {
+        return promisifyRun("INSERT INTO message (room, content, sendTime) VALUES (?, ?, Datetime('now'))", [room, messageContent]);
     }
 
     static deleteExpiredMessages() {
@@ -21,12 +17,12 @@ module.exports = class Database {
     }
 }
 
-function promisifyGetSingle(sql, data) {
+function promisifyAll(sql, data) {
     return new Promise((resolve, reject) => {
         db.serialize(function() {
-            db.get(sql, data, (err, row) => {
+            db.all(sql, data, (err, rows) => {
                 if (err) return reject(err);
-                resolve(row);
+                resolve(rows);
             });
         });
     });
