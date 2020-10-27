@@ -1,15 +1,18 @@
 <% include includes/header.ejs %>
 
-<div class="container">
+<div class="container mb-5">
     <h2>Messages</h2>
     <% messages.forEach(function(message, index) { %>
-        <div class="card">
-            <div class="card-body">
-                <pre id="message<%- index %>"><%= message.content %></pre>
+        <div class="card mb-2">
+            <pre id="message<%- index %>" class="card-body m-0"><%= message.content %></pre>
+            <div class="card-footer copy text-center" data-clipboard-target="#message<%- index %>">
+                <a href="#" class="card-link">Copy</a>
             </div>
-            <a href="#" class="card-link copy" data-clipboard-target="#message<%- index %>">Copy</a>
         </div>
     <% }); %>
+    <% if (!messages.length) { %>
+        <p>There are no message in your room</p>
+    <% } %>
 
     <% if (room) { %>
         <h2>Add</h2>
@@ -22,12 +25,17 @@
             <button type="submit" class="btn btn-primary btn-lg">Add</button>
         </form>
 
-        <div class="card card-body mt-4">
-            <div class="text-center mb-2">
-                <canvas id="qrCode" width="100" height="100"></canvas>
+        <div class="card my-4">
+            <div class="card-header text-center">
+                Your room details
             </div>
-            <div>
-                <a href="/join/<%- room %>"><%= room %></a>
+            <div class="card-body">
+                <div class="text-center mb-2">
+                    <canvas id="qrCode" width="100" height="100"></canvas>
+                </div>
+                <div class="text-center">
+                    <a href="/join/<%- room %>"><%= room %></a>
+                </div>
             </div>
         </div>
 
@@ -42,6 +50,18 @@
             <button type="submit" class="btn btn-primary btn-lg">Create room</button>
         </form>
     <% } %>
+
+    <div style="font-family: monospace;">
+        <h2>How it works</h2>
+        <p>Easily transfer small messages between your devices.</p>
+        <p>
+            Start by creating a room. 
+            You can only be part of one room.
+        </p>
+        <p>Send the joining link or scan the QR code on your other devices to join the room on those devices also.</p>
+        <p>You can then add messages to your room which will be seen on any of your devices (remember to refresh).</p>
+        <p>Messages are automatically deleted after 15 minutes.</p>
+    </div>
 </div>
 
 <script src="/js/clipboard.min.js" async></script>

@@ -41,3 +41,6 @@ pre {
     padding: 5px; 
 }
 
+.copy {
+    cursor: pointer;
+}

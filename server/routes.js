@@ -64,6 +64,6 @@ module.exports = function(app) {
     });
 
     function setCookie(res, room) {
-        res.cookie(config.cookieName, room, { maxAge: 900000, httpOnly: true });
+        res.cookie(config.cookieName, room, { maxAge: 31536000, httpOnly: true });
     }
 };
